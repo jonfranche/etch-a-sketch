@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Etch-a-sketch</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div>
+            <button id="clear">Clear Sketch</button>
+        </div>
+        <div class="etch">
+            <div id="title"><h1>Etch A Sketch</h1></div>
+            <div id="container">
+
+            </div>
+        </div>
+    </body>
+    <script>
+        function mouseEnter(e) {
+            e.target.style.background = 'black';
+        }
+
+        function createGrid(gridX, gridY) {
+            let x = gridX;
+            let y = gridY;
+            let colSize = 800 / x;
+            let rowSize = 800 / y;
+            total = x * y;
+            container.style.gridTemplateColumns = 'repeat(' + x + ', ' + colSize + 'px)';
+            container.style.gridTemplateRows = 'repeat(' + y + ', ' + rowSize + 'px)';
+            for (let i = 0; i < total; i++) {
+                const square = document.createElement('div');
+                square.classList.add('square');
+                container.appendChild(square);
+            }
+        }
+
+        function addListeners() {
+            const squares = document.querySelectorAll('.square')
+            squares.forEach(square => square.addEventListener('mouseenter', mouseEnter));
+        }
+
+        const container = document.querySelector('#container');
+        const clear = document.querySelector('#clear');
+        let total = 16;
+        container.setAttribute('style', 'height: 800px; width: 800px; display: grid; grid-template: repeat(4, 200px) / repeat(4, 200px);');
+        for (let i = 0; i < total; i++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            container.appendChild(square);
+        }
+
+        addListeners();
+
+        clear.addEventListener('click', () => {
+            for (let i = 0; i < total; i++) {
+                const square = document.querySelector('.square');
+                container.removeChild(square);
+            }
+            let gridX = window.prompt('How many squares on the x axis would you like?', 4);
+            let gridY = window.prompt('How many squares on the y axis would you like?', 4);
+            createGrid(gridX, gridY);
+            addListeners();
+        });
+    </script>
+</html>
